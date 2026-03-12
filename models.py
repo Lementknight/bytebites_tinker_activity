@@ -3,23 +3,25 @@ ByteBites Backend Models
 Implements core classes for managing customers, food items, menus, and transactions.
 """
 
+from typing import List
+
 
 class Customer:
     """
     Represents a ByteBites user with identification and purchase tracking for verification.
     """
     
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         """
         Initialize a Customer with a name and empty purchase history.
         
         Args:
             name (str): The customer's name
         """
-        self.name = name
-        self.purchaseHistory = []
+        self.name: str = name
+        self.purchaseHistory: List['Transaction'] = []
     
-    def verifyUser(self):
+    def verifyUser(self) -> bool:
         """
         Verify if the customer is a valid/registered user.
         
@@ -34,7 +36,7 @@ class FoodItem:
     Represents a single food product available for purchase with browsable attributes and ratings.
     """
     
-    def __init__(self, name, price, category, popularityRating):
+    def __init__(self, name: str, price: float, category: str, popularityRating: float) -> None:
         """
         Initialize a FoodItem with product details.
         
@@ -44,10 +46,10 @@ class FoodItem:
             category (str): The category classification (e.g., "Drinks", "Desserts")
             popularityRating (float): A rating indicating how popular the item is
         """
-        self.name = name
-        self.price = price
-        self.category = category
-        self.popularityRating = popularityRating
+        self.name: str = name
+        self.price: float = price
+        self.category: str = category
+        self.popularityRating: float = popularityRating
 
 
 class Menu:
@@ -55,13 +57,13 @@ class Menu:
     Central inventory that manages and provides access to all food items with filtering capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize an empty Menu with no items.
         """
-        self.items = []
+        self.items: List[FoodItem] = []
     
-    def addItem(self, item):
+    def addItem(self, item: FoodItem) -> None:
         """
         Add a new FoodItem to the menu.
         
@@ -70,7 +72,7 @@ class Menu:
         """
         self.items.append(item)
     
-    def filterByCategory(self, category):
+    def filterByCategory(self, category: str) -> List[FoodItem]:
         """
         Return a filtered list of FoodItems matching the specified category.
         
@@ -82,7 +84,7 @@ class Menu:
         """
         return [item for item in self.items if item.category == category]
     
-    def getAllItems(self):
+    def getAllItems(self) -> List[FoodItem]:
         """
         Return the complete list of all available items.
         
@@ -97,14 +99,14 @@ class Transaction:
     Represents a purchase session that groups selected items and calculates total cost.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize an empty Transaction with no selected items and zero total cost.
         """
-        self.selectedItems = []
-        self.totalCost = 0.0
+        self.selectedItems: List[FoodItem] = []
+        self.totalCost: float = 0.0
     
-    def addItem(self, item):
+    def addItem(self, item: FoodItem) -> None:
         """
         Add a FoodItem to the transaction.
         
@@ -114,7 +116,7 @@ class Transaction:
         self.selectedItems.append(item)
         self.totalCost += item.price
     
-    def computeTotal(self):
+    def computeTotal(self) -> float:
         """
         Calculate and return the sum of all selected items' prices.
         
@@ -123,7 +125,7 @@ class Transaction:
         """
         return sum(item.price for item in self.selectedItems)
     
-    def getItems(self):
+    def getItems(self) -> List[FoodItem]:
         """
         Return the list of selected items.
         
