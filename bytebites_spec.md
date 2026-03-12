@@ -11,12 +11,14 @@ Finally, when a user picks items, we need to group them into a single transactio
 ```mermaid
 classDiagram
     class Customer {
+        <<ByteBites user with purchase tracking for verification>>
         +String name
         +List~Transaction~ purchaseHistory
         +verifyUser() boolean
     }
 
     class FoodItem {
+        <<Core product with browsing attributes and ratings>>
         +String name
         +Float price
         +String category
@@ -24,6 +26,7 @@ classDiagram
     }
 
     class Menu {
+        <<Central inventory with category filtering capabilities>>
         +List~FoodItem~ items
         +addItem(FoodItem item) void
         +filterByCategory(String category) List~FoodItem~
@@ -31,6 +34,7 @@ classDiagram
     }
 
     class Transaction {
+        <<Purchase session with item aggregation and cost calculation>>
         +List~FoodItem~ selectedItems
         +Float totalCost
         +addItem(FoodItem item) void
