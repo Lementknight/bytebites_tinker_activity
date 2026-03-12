@@ -8,4 +8,37 @@ We also need a way to manage the full collection of items — a digital list tha
 
 Finally, when a user picks items, we need to group them into a single transaction. This transaction object should store the selected items and compute the total cost. 
 
-## Candidate Classes 1. Customer 2. FoodItem (or just Item) 3. Menu (or Collection) 4. Transaction
+```mermaid
+classDiagram
+    class Customer {
+        +String name
+        +List~Transaction~ purchaseHistory
+        +verifyUser() boolean
+    }
+
+    class FoodItem {
+        +String name
+        +Float price
+        +String category
+        +Float popularityRating
+    }
+
+    class Menu {
+        +List~FoodItem~ items
+        +addItem(FoodItem item) void
+        +filterByCategory(String category) List~FoodItem~
+        +getAllItems() List~FoodItem~
+    }
+
+    class Transaction {
+        +List~FoodItem~ selectedItems
+        +Float totalCost
+        +addItem(FoodItem item) void
+        +computeTotal() Float
+        +getItems() List~FoodItem~
+    }
+
+    Customer ||--o{ Transaction : "has purchase history"
+    Menu ||--o{ FoodItem : "contains"
+    Transaction ||--o{ FoodItem : "includes"
+```
